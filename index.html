@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación de Criterio Comercial y Manejo de Escenarios Operativos - AM Bienes Raíces / Valuamex®</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- HTML2PDF.js para generación de PDF real -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#1A75B8',
+                            'blue-light': '#3b8cc7',
+                            'blue-dark': '#125282',
+                            green: '#6DB345',
+                            'green-light': '#84c45e',
+                            'green-dark': '#4d822e',
+                        },
+                        navy: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .option-card {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .option-card:hover {
+            transform: translateY(-2px);
+        }
+        .option-selected {
+            border-color: #1A75B8 !important;
+            background-color: #f0f7ff !important;
+            box-shadow: 0 4px 12px rgba(26, 117, 184, 0.12);
+        }
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background-color: #ffffff !important;
+            }
+            .print-break {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col justify-between">
+
+    <!-- ENCABEZADO CORPORATIVO -->
+    <header class="bg-white border-b-4 border-brand-green shadow-sm sticky top-0 z-30 no-print" id="main-header">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <img src="3103.webp" alt="Logo Valuamex" class="w-14 h-14 object-contain">
+                <div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="font-bold tracking-tight text-lg text-brand-blue-dark">AM BIENES RAÍCES</span>
+                        <span class="text-brand-green font-light">|</span>
+                        <span class="font-semibold tracking-wider text-sm text-brand-green">VALUAMEX®</span>
+                    </div>
+                    <p id="header-subtitle" class="text-xs text-slate-500 font-medium">Dirección de Desarrollo Comercial y Operaciones</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <span id="timer-badge" class="hidden text-xs bg-red-50 border border-red-200 text-red-600 px-3 py-1.5 rounded-full font-bold items-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-stopwatch animate-pulse"></i>
+                    <span id="timer-text">15:00</span>
+                </span>
+                <span class="hidden sm:flex text-xs bg-slate-100 border border-slate-200 text-slate-600 px-3 py-1.5 rounded-full font-semibold items-center">
+                    <i class="fa-regular fa-calendar-check text-brand-green mr-1.5"></i>10 de noviembre de 2026
+                </span>
+                <button onclick="openPinModal()" title="Acceso Exclusivo Dirección" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-brand-blue border border-slate-200 px-3 py-1.5 rounded-full transition flex items-center gap-1.5 font-semibold">
+                    <i class="fa-solid fa-lock text-[11px]"></i>
+                    <span class="hidden sm:inline">Dirección</span>
+                </button>
+            </div>
+        </div>
+        <!-- BARRA DE PROGRESO -->
+        <div id="progress-container" class="w-full bg-slate-100 h-1.5 hidden">
+            <div id="progress-bar" class="bg-gradient-to-r from-brand-blue to-brand-green h-1.5 transition-all duration-300" style="width: 0%"></div>
+        </div>
+    </header>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <main class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 py-8">
+
+        <!-- ==========================================
+             VISTA 1: BIENVENIDA Y REGISTRO DEL ASESOR
+             ========================================== -->
+        <section id="view-welcome" class="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
+            <div class="bg-gradient-to-r from-brand-blue-dark to-brand-blue p-6 sm:p-8 text-white">
+                <span class="inline-block bg-white/20 border border-white/30 text-white text-xs font-semibold px-3 py-1 rounded-full mb-3 uppercase tracking-wider shadow-sm">
+                    Diagnóstico de Perfil Operativo
+                </span>
+                <h1 class="text-2xl sm:text-3xl font-bold tracking-tight mb-2">
+                    Evaluación de Criterio Comercial y Manejo de Escenarios Operativos
+                </h1>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    Bienvenido al sistema de evaluación situacional de <strong>AM Bienes Raíces / Valuamex®</strong>. A continuación se presentan 15 escenarios prácticos del día a día inmobiliario y de conocimiento legal general. Nuestro objetivo es conocer tu estilo de negociación, toma de decisiones y resolución de casos.
+                </p>
+            </div>
+
+            <div class="p-6 sm:p-8 space-y-6">
+                <div class="bg-blue-50 border-l-4 border-brand-blue p-4 rounded-r-xl text-sm text-slate-700 flex items-start gap-3">
+                    <i class="fa-solid fa-circle-info text-brand-blue text-lg mt-0.5"></i>
+                    <div>
+                        <strong>Instrucciones:</strong> No existen respuestas correctas o incorrectas estándar; cada asesor tiene un estilo propio de gestión. Selecciona la opción (<strong>A, B o C</strong>) que refleje con mayor precisión cómo actuarías en una operación real.
+                    </div>
+                </div>
+
+                <!-- Formulario de Datos -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2">
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                            Nombre Completo del Evaluado <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <i class="fa-regular fa-user absolute left-3.5 top-3.5 text-slate-400"></i>
+                            <input type="text" id="input-name" placeholder="Ej. Lic. Carlos Eduardo Méndez Soto" 
+                                class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 outline-none transition text-slate-800 font-medium">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                            Puesto / Rol <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <i class="fa-solid fa-briefcase absolute left-3.5 top-3.5 text-slate-400"></i>
+                            <select id="input-role" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 outline-none transition text-slate-800 bg-white font-medium">
+                                <option value="Asesor Inmobiliario Activo">Asesor Inmobiliario Activo</option>
+                                <option value="Candidato a Asesor Inmobiliario">Candidato a Asesor Inmobiliario</option>
+                                <option value="Líder Comercial / Coordinador">Líder Comercial / Coordinador</option>
+                                <option value="Valuador / Perito Técnico">Valuador / Perito Técnico</option>
+                                <option value="Gestor / Ejecutivo de Cuenta">Gestor / Ejecutivo de Cuenta</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                            Sucursal / Zona Operativa <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <i class="fa-solid fa-location-dot absolute left-3.5 top-3.5 text-slate-400"></i>
+                            <input type="text" id="input-branch" placeholder="Ej. Tu Ciudad" value="" 
+                                class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 outline-none transition text-slate-800 font-medium">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="welcome-error" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm font-medium flex items-center gap-2">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span>Por favor ingresa tu nombre completo para comenzar la evaluación.</span>
+                </div>
+
+                <div class="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-100">
+                    <span class="text-xs text-slate-400 flex items-center gap-1.5">
+                        <i class="fa-solid fa-clock"></i> Tiempo estimado: 10 a 15 minutos (15 casos prácticos)
+                    </span>
+                    <button onclick="startAssessment()" class="w-full sm:w-auto bg-brand-blue hover:bg-brand-blue-dark text-white font-semibold px-8 py-3.5 rounded-xl shadow-md hover:shadow-lg transition flex items-center justify-center gap-2">
+                        <span>Comenzar Evaluación</span>
+                        <i class="fa-solid fa-arrow-right text-brand-green-light"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             VISTA 2: CUESTIONARIO SITUACIONAL (15 CASOS)
+             ========================================== -->
+        <section id="view-quiz" class="hidden space-y-6">
+            <!-- Cabecera de progreso -->
+            <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <span id="badge-question-num" class="bg-navy-900 text-brand-green font-bold text-sm px-3.5 py-1.5 rounded-lg">
+                        Caso 1 de 15
+                    </span>
+                    <span id="quiz-user-display" class="text-sm font-semibold text-slate-700 truncate max-w-[200px] sm:max-w-xs"></span>
+                </div>
+                <div class="flex items-center gap-1.5" id="question-dots">
+                    <!-- Puntos indicadores generados por JS -->
+                </div>
+            </div>
+
+            <!-- Tarjeta de Pregunta Activa -->
+            <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 sm:p-8">
+                <div class="mb-6">
+                    <span id="question-category-clean" class="text-xs font-bold uppercase tracking-wider text-brand-green-dark block mb-2">
+                        Escenario de Negociación
+                    </span>
+                    <h2 id="question-text" class="text-lg sm:text-xl font-bold text-brand-blue-dark leading-snug">
+                        <!-- Texto de pregunta cargado dinámicamente -->
+                    </h2>
+                </div>
+
+                <!-- Opciones A, B, C -->
+                <div id="options-container" class="space-y-3.5">
+                    <!-- Opciones inyectadas por JS -->
+                </div>
+
+                <div id="quiz-alert" class="hidden mt-4 bg-amber-50 border border-amber-300 text-amber-800 px-4 py-2.5 rounded-xl text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span>Selecciona una alternativa antes de continuar.</span>
+                </div>
+
+                <!-- Botones de Navegación -->
+                <div class="mt-8 pt-5 border-t border-slate-100 flex items-center justify-between gap-4">
+                    <button id="btn-prev" onclick="prevQuestion()" class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-100 font-medium text-sm transition flex items-center gap-2">
+                        <i class="fa-solid fa-chevron-left text-xs"></i>
+                        <span>Anterior</span>
+                    </button>
+
+                    <button id="btn-next" onclick="nextQuestion()" class="bg-brand-blue hover:bg-brand-blue-dark text-white font-semibold px-7 py-3 rounded-xl shadow-md transition flex items-center gap-2 ml-auto">
+                        <span id="btn-next-text">Siguiente Caso</span>
+                        <i class="fa-solid fa-chevron-right text-brand-green-light text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             VISTA DE FIRMA (NUEVA PANTALLA)
+             ========================================== -->
+        <section id="view-signature" class="hidden bg-white rounded-2xl shadow-md border border-slate-200 p-6 sm:p-10 max-w-2xl mx-auto text-center space-y-6">
+            <div class="w-16 h-16 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center mx-auto mb-2 text-3xl">
+                <i class="fa-solid fa-file-signature"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-navy-900">
+                Firma de Conformidad
+            </h2>
+            <div id="timeout-warning" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm font-semibold mb-4 mx-auto max-w-md">
+                <i class="fa-solid fa-clock mr-1.5"></i> El tiempo límite de 15 minutos se ha agotado. Por favor firma para guardar tu avance actual.
+            </div>
+            <p class="text-slate-600 text-sm sm:text-base mb-6">
+                Para validar tus respuestas y finalizar la evaluación, por favor plasma tu firma digital a continuación.
+            </p>
+
+            <div class="text-left">
+                <div class="relative bg-white border-2 border-slate-300 rounded-xl overflow-hidden focus-within:border-brand-blue focus-within:ring-4 focus-within:ring-brand-blue/20 transition-all">
+                    <!-- El touch-none previene que la pantalla haga scroll al intentar firmar en móviles -->
+                    <canvas id="signature-pad" class="w-full h-40 cursor-crosshair touch-none bg-slate-50"></canvas>
+                    <button type="button" onclick="clearSignature()" class="absolute bottom-3 right-3 bg-white hover:bg-slate-100 text-slate-600 text-xs font-semibold px-3 py-2 rounded-lg transition shadow border border-slate-200 flex items-center gap-1.5">
+                        <i class="fa-solid fa-eraser"></i> Limpiar
+                    </button>
+                </div>
+                <p id="signature-error" class="hidden text-xs text-red-500 mt-2 font-semibold flex items-center gap-1.5">
+                    <i class="fa-solid fa-circle-exclamation"></i> La firma es obligatoria para generar tu folio.
+                </p>
+            </div>
+
+            <div class="pt-4 border-t border-slate-100">
+                <button onclick="finishAssessment()" class="w-full sm:w-auto bg-brand-blue hover:bg-brand-blue-dark text-white font-semibold px-8 py-3.5 rounded-xl shadow-md transition flex items-center justify-center gap-2 mx-auto">
+                    <span>Finalizar y Generar Folio</span>
+                    <i class="fa-solid fa-check-circle text-brand-green-light"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             VISTA 3: PANTALLA DE FINALIZACIÓN LIMPIA (PARA EL ASESOR)
+             ========================================== -->
+        <section id="view-completion" class="hidden bg-white rounded-2xl shadow-md border border-slate-200 p-6 sm:p-10 text-center">
+            <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-5 text-3xl shadow-inner">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-navy-900 mb-2">
+                ¡Evaluación Completada con Éxito!
+            </h2>
+            <p class="text-slate-600 max-w-xl mx-auto text-sm sm:text-base mb-6">
+                Tus respuestas han sido registradas para el análisis de perfil comercial de <strong>AM Bienes Raíces / Valuamex®</strong>. Agradecemos tu tiempo y disposición.
+            </p>
+
+            <!-- Tarjeta con Folio de Verificación para enviar por WhatsApp a Dirección -->
+            <div class="max-w-lg mx-auto bg-slate-50 border border-slate-200 rounded-2xl p-5 mb-6 text-left">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500">
+                        Folio de Sincronización y Registro
+                    </span>
+                    <span class="text-xs bg-emerald-100 text-emerald-800 font-semibold px-2.5 py-0.5 rounded-full">
+                        Validado
+                    </span>
+                </div>
+                <p class="text-xs text-slate-500 mb-3">
+                    Si realizaste esta evaluación desde tu dispositivo móvil o computadora personal, copia este código de registro y envíalo por WhatsApp o correo a Dirección:
+                </p>
+                <div class="flex items-center gap-2">
+                    <input type="text" id="completion-token" readonly 
+                        class="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-mono text-navy-900 select-all focus:outline-none">
+                    <button onclick="copyToken()" class="bg-brand-blue hover:bg-brand-blue-dark text-white px-4 py-2.5 rounded-xl text-xs font-semibold transition shrink-0 flex items-center gap-1.5 shadow-sm">
+                        <i class="fa-regular fa-copy"></i>
+                        <span id="copy-btn-label">Copiar</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 border-t border-slate-100">
+                <button onclick="resetAssessment()" class="text-sm text-slate-500 hover:text-navy-900 font-medium px-4 py-2 rounded-lg transition">
+                    <i class="fa-solid fa-rotate-right mr-1"></i> Realizar nueva evaluación
+                </button>
+                <button onclick="openPinModal()" class="text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-5 py-2.5 rounded-xl transition flex items-center gap-2">
+                    <i class="fa-solid fa-user-shield text-brand-blue"></i>
+                    <span>Acceso Dirección / Dictamen Ejecutivo (PIN)</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             VISTA 4: PANEL FORENSE DE DIRECCIÓN (OCULTO CON PIN 2026)
+             ========================================== -->
+        <section id="view-forensic" class="hidden space-y-6">
+            <!-- Barra Superior Forense -->
+            <div class="bg-navy-950 text-white rounded-2xl p-6 shadow-xl border-l-8 border-brand-green flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="bg-red-600/20 border border-red-500/40 text-red-300 text-[11px] font-bold px-2.5 py-0.5 rounded uppercase tracking-wider">
+                            <i class="fa-solid fa-user-secret mr-1"></i> Confidencial - Exclusivo Dirección
+                        </span>
+                        <span class="text-xs text-slate-400">Ing. Ernesto Chiñas Castillo</span>
+                    </div>
+                    <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight text-white">
+                        Dictamen Forense de Integridad y Riesgo de Mala Praxis
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-0.5">
+                        Análisis psicométrico de elección forzada (Método Reid / Detección de desvío de cartera y secreto industrial)
+                    </p>
+                </div>
+                <div class="flex flex-wrap items-center gap-2 no-print" id="forensic-actions">
+                    <button onclick="openDecodeModal()" class="bg-slate-800 hover:bg-slate-700 text-brand-green-light border border-slate-700 text-xs font-semibold px-3.5 py-2.5 rounded-xl transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-key"></i>
+                        <span>Cargar Folio Remoto</span>
+                    </button>
+                    <!-- SE HA ACTUALIZADO EL BOTÓN DE PDF AQUÍ -->
+                    <button id="btn-download-pdf" onclick="descargarPDF()" class="bg-brand-blue hover:bg-brand-blue-dark text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <span>Descargar PDF</span>
+                    </button>
+                    <button onclick="exitForensicView()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium px-3 py-2.5 rounded-xl transition">
+                        <i class="fa-solid fa-xmark"></i> Salir
+                    </button>
+                </div>
+            </div>
+
+            <!-- Ficha del Evaluado y Semáforo Principal -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Datos del Evaluado -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-3">
+                            Expediente del Evaluado
+                        </span>
+                        <h3 id="forensic-name" class="text-xl font-bold text-navy-900 mb-1">Sin datos cargados</h3>
+                        <p id="forensic-role" class="text-sm font-medium text-brand-blue mb-4">-</p>
+                        
+                        <div class="space-y-2 text-xs text-slate-600 border-t border-slate-100 pt-3">
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Sucursal / Zona:</span>
+                                <span id="forensic-branch" class="font-semibold text-slate-800">-</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Fecha de Evaluación:</span>
+                                <span id="forensic-date" class="font-semibold text-slate-800">10/Nov/2026</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Alertas Rojas (10 pts):</span>
+                                <span id="forensic-red-count" class="font-bold text-red-600">0 casos</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Alertas Amarillas (5 pts):</span>
+                                <span id="forensic-yellow-count" class="font-bold text-amber-600">0 casos</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 pt-4 border-t border-slate-100">
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Firma de Conformidad</span>
+                        <div class="bg-slate-50 border border-slate-200 rounded-xl p-2 flex items-center justify-center min-h-[80px]">
+                            <img id="forensic-signature" src="" alt="Firma del Evaluado" class="max-h-16 hidden mix-blend-multiply">
+                            <span id="forensic-signature-missing" class="text-[11px] text-slate-400 italic">No disponible (Cargado vía remoto)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 pt-3 border-t border-slate-100">
+                        <span class="text-[11px] text-slate-400 block">Folio de Auditoría:</span>
+                        <code id="forensic-token-short" class="text-[11px] font-mono text-slate-600 break-all">-</code>
+                    </div>
+                </div>
+
+                <!-- Semáforo de Riesgo Global -->
+                <div id="forensic-semaphore-card" class="lg:col-span-2 rounded-2xl p-6 shadow-sm border-2 flex flex-col justify-between">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/10">
+                        <div>
+                            <span id="forensic-badge" class="inline-block text-xs font-extrabold uppercase tracking-wider px-3 py-1 rounded-full mb-2">
+                                NIVEL DE RIESGO
+                            </span>
+                            <h3 id="forensic-verdict-title" class="text-2xl font-extrabold">
+                                Diagnóstico en espera
+                            </h3>
+                        </div>
+                        <div class="text-left sm:text-right shrink-0">
+                            <span class="text-xs uppercase font-bold opacity-75 block">Puntaje de Mala Praxis</span>
+                            <div class="text-4xl font-black tracking-tight">
+                                <span id="forensic-total-score">0</span><span class="text-lg font-normal opacity-70">/150 pts</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p id="forensic-verdict-desc" class="text-sm leading-relaxed my-4 font-medium">
+                        Complete la evaluación o cargue un folio remoto para visualizar el dictamen.
+                    </p>
+
+                    <div class="bg-white/80 backdrop-blur rounded-xl p-4 border border-black/10">
+                        <h4 class="text-xs font-extrabold uppercase tracking-wider text-navy-900 mb-1 flex items-center gap-1.5">
+                            <i class="fa-solid fa-gavel text-brand-blue"></i> Acción Directa Recomendada para Dirección:
+                        </h4>
+                        <p id="forensic-action-plan" class="text-xs sm:text-sm text-slate-800 font-semibold">
+                            -
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VECTORES DE VULNERABILIDAD Y DELITOS ASOCIADOS -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 print-break">
+                <h3 class="text-base font-bold text-navy-900 mb-1 flex items-center gap-2">
+                    <i class="fa-solid fa-chart-pie text-brand-blue"></i>
+                    Mapa de Vectores de Vulnerabilidad Operativa y Penal
+                </h3>
+                <p class="text-xs text-slate-500 mb-5">
+                    Desglose del riesgo detectado según el tipo de conducta y su correlación con el Código Penal del Estado de México y la LFPPI.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5" id="vectors-container">
+                    <!-- Barras de vectores generadas por JS -->
+                </div>
+            </div>
+
+            <!-- DESGLOSE FORENSE PREGUNTA POR PREGUNTA -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h3 class="text-base font-bold text-navy-900 flex items-center gap-2">
+                            <i class="fa-solid fa-magnifying-glass-chart text-brand-blue"></i>
+                            Auditoría Detallada de Respuestas y Racionalización Psicológica
+                        </h3>
+                        <p class="text-xs text-slate-500">
+                            Análisis individual de cada escenario, puntos de riesgo acumulados y tipificación jurídica de la conducta elegida.
+                        </p>
+                    </div>
+                </div>
+
+                <div id="forensic-breakdown-list" class="space-y-4">
+                    <!-- Tarjetas de desglose generadas por JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL DE ACCESO PIN DIRECCIÓN -->
+    <div id="modal-pin" class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm z-50 hidden items-center justify-center p-4 no-print">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-lg bg-brand-blue text-white flex items-center justify-center">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-brand-blue-dark text-base">Acceso Exclusivo Dirección</h3>
+                        <p class="text-xs text-slate-500">AM Bienes Raíces / Valuamex®</p>
+                    </div>
+                </div>
+                <button onclick="closePinModal()" class="text-slate-400 hover:text-slate-600 p-1">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+                        PIN de Seguridad (Dirección General)
+                    </label>
+                    <input type="password" id="input-pin" placeholder="Ingresa el PIN (2026)" 
+                        class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 outline-none text-center text-lg font-bold tracking-widest text-navy-900">
+                </div>
+
+                <div class="border-t border-slate-100 pt-3">
+                    <label class="block text-xs font-semibold text-slate-500 mb-1.5">
+                        ¿Evaluación realizada en otro celular? Pega el Folio aquí (Opcional):
+                    </label>
+                    <input type="text" id="input-remote-token" placeholder="Ej. AMV-eyJuIjoi..." 
+                        class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-mono text-slate-700 focus:border-brand-blue outline-none">
+                </div>
+
+                <p id="pin-error" class="hidden text-xs text-red-600 font-semibold text-center">
+                    <i class="fa-solid fa-circle-xmark mr-1"></i> PIN incorrecto o folio inválido.
+                </p>
+
+                <div class="flex items-center justify-end gap-2 pt-2">
+                    <button onclick="closePinModal()" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100">
+                        Cancelar
+                    </button>
+                    <button onclick="verifyPinAndOpenForensic()" class="bg-brand-blue hover:bg-brand-blue-dark text-white px-6 py-2.5 rounded-xl text-xs font-semibold shadow transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-unlock-keyhole text-brand-green-light"></i>
+                        <span>Desbloquear Dictamen</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="bg-white border-t border-slate-200 py-4 mt-12 no-print">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2">
+            <div>
+                © 2026 <strong>AM Bienes Raíces / Valuamex®</strong>. Todos los derechos reservados. México.
+            </div>
+            <div class="flex items-center gap-4">
+                <span>Sistema de Gestión de Talento Comercial v3.4</span>
+                <button onclick="openPinModal()" class="text-slate-400 hover:text-brand-blue underline">
+                    Panel Ejecutivo (PIN)
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LÓGICA DE LA APLICACIÓN -->
+    <script>
+        // =========================================================================
+        // BASE DE DATOS DE LOS 15 ESCENARIOS (MÉTODO REID / ELECCIÓN FORZADA)
+        // =========================================================================
+        const QUESTIONS_DATA = [
+            {
+                id: 1,
+                cleanCategory: "Escenario 01 • Gestión de Contratos y Propietarios",
+                question: "Un propietario con el que hiciste excelente empatía te dice al vencer su contrato de exclusividad: «Ya no quiero saber nada de inmobiliarias ni firmar contratos, pero tú trabajas muy bien; si me traes al comprador por tu cuenta, te doy el 3% directo a ti en efectivo». ¿Cómo manejas la situación?",
+                vector: "puenteo",
+                legalRisk: "Fraude / Competencia Desleal e Incumplimiento de No Captación",
+                options: {
+                    A: {
+                        text: "Acepto el trato de forma discreta fuera de horario de oficina; al final, el cliente ya había decidido irse de la agencia y es preferible que alguien del equipo gane la comisión a que se pierda por completo.",
+                        points: 10,
+                        forensicAnalysis: "ALERTA ROJA: El evaluado racionaliza el robo directo de cartera ('puenteo') bajo la excusa de que 'el cliente ya se iba'. Alto riesgo de colusión con propietarios para dejar vencer exclusivas y cobrarlas por fuera."
+                    },
+                    B: {
+                        text: "Le agradezco la confianza, le explico que por ética y respaldo jurídico todas mis operaciones pasan por AM Bienes Raíces / Valuamex®, y negocio con Dirección ofrecerle un esquema especial de renovación para no perder la propiedad.",
+                        points: 0,
+                        forensicAnalysis: "CONDUCTA ÍNTEGRA: Protege la marca, rechaza el soborno/puenteo en efectivo y canaliza la objeción hacia Dirección para retener el inventario dentro de la firma."
+                    },
+                    C: {
+                        text: "Le digo que sí para no enfriar la relación ni perder el contacto, sigo promoviendo la casa por mi cuenta con mi red personal y, solo si sale un comprador que requiera crédito complejo, lo ingreso a la oficina.",
+                        points: 5,
+                        forensicAnalysis: "ALERTA AMARILLA (Doble Juego): Opera de manera oportunista. Si la venta es de contado se roba la comisión; solo usa a la inmobiliaria cuando necesita su infraestructura jurídica o de gestoría."
+                    }
+                }
+            },
+            {
+                id: 2,
+                cleanCategory: "Escenario 02 • Cierres en Fin de Semana y Apartados",
+                question: "Un comprador perfilado tiene prisa por apartar un inmueble un domingo por la tarde. Te dice que no quiere esperar al lunes para transferir a la cuenta de la empresa y te ofrece darte $20,000 pesos en efectivo o transferirlos a tu cuenta personal en ese momento para congelar el trato.",
+                vector: "puenteo",
+                legalRisk: "Abuso de Confianza (Art. 302 Código Penal Edomex) y Jineteo de Recursos",
+                options: {
+                    A: {
+                        text: "Los recibo en mi cuenta personal o en efectivo extendiéndole un recibo provisional firmado por mí para asegurar el cierre en caliente, y en la semana veo cómo reportarlo en la oficina.",
+                        points: 10,
+                        forensicAnalysis: "ALERTA ROJA: Disposición a mezclar dinero de clientes en cuentas bancarias personales. Esta es la vía principal por la que comienzan los delitos de Abuso de Confianza y retención indebida de apartados."
+                    },
+                    B: {
+                        text: "Le indico que por seguridad jurídica de su patrimonio ningún asesor está facultado para recibir dinero en cuentas personales; le proporciono los datos bancarios oficiales de la firma para que haga la transferencia o programamos la entrega en oficina el lunes a primera hora.",
+                        points: 0,
+                        forensicAnalysis: "CONDUCTA ÍNTEGRA: Aplica blindaje patrimonial institucional. Entiende que las transferencias bancarias a la empresa funcionan 24/7 y jamás toca efectivo del cliente."
+                    },
+                    C: {
+                        text: "Le pido que se los entregue directamente en mano al propietario ese mismo domingo sin recibo de la inmobiliaria, para que ambos amarren el trato rápido.",
+                        points: 5,
+                        forensicAnalysis: "ALERTA AMARILLA: Indisciplina operativa grave. Al fomentar entregas de dinero directas entre comprador y vendedor sin contrato de la agencia, deja a AM Bienes Raíces fuera del control de la comisión."
+                    }
+                }
+            },
+            {
+                id: 3,
+                cleanCategory: "Escenario 03 • Aprovechamiento de Leads de Guardia",
+                question: "Atiendes un lead asignado por la guardia de la empresa buscando una casa de $2,500,000. Al mostrarle la propiedad, no le gusta, pero te comenta que su primo está vendiendo una casa idéntica a tres calles y te pide que le ayudes solo a revisar los papeles y llevar el trámite por un honorario menor.",
+                vector: "cruzada",
+                legalRisk: "Desvío de Leads Pagados y Robo de Oportunidad Comercial",
+                options: {
+                    A: {
+                        text: "Como esa propiedad del primo no pertenece al inventario de AM Bienes Raíces / Valuamex®, puedo llevarle la gestoría o el avalúo como trabajo independiente en mis tiempos libres.",
+                        points: 10,
+                        forensicAnalysis: "ALERTA ROJA: Se apropia de prospectos pagados con pauta de la empresa para venderles servicios particulares ('freelance'). Desconoce que el lead pertenece a la agencia."
+                    },
+                    B: {
+                        text: "Registro el requerimiento en el CRM porque el prospecto se originó con inversión de la firma, y le ofrezco nuestros servicios institucionales de gestoría jurídica, captación o valuación a través de Valuamex®.",
+                        points: 0,
+                        forensicAnalysis: "CONDUCTA ÍNTEGRA: Reconoce la trazabilidad del lead invertido por la empresa y capitaliza la venta cruzada (gestoría/valuación/captación) a favor de la firma."
+                    },
+                    C: {
+                        text: "Le paso el contacto a un amigo abogado o valuador externo para que lo atienda por fuera y me comparta un porcentaje de referencia.",
+                        points: 5,
+                        forensicAnalysis: "ALERTA AMARILLA: Tráfico de leads hacia terceros externos a cambio de 'moches' o comisiones ocultas, perjudicando directamente la facturación de Valuamex®."
+                    }
+                }
+            },
+            {
+                id: 4,
+                cleanCategory: "Escenario 04 • Administración de CRM y Bases de Datos",
+                question: "Sobre el registro de prospectos y propietarios en el CRM o bitácoras de la empresa, ¿cuál consideras que es la práctica más eficiente para un asesor de alto rendimiento?",
+                vector: "secreto",
+                legalRisk: "Apropiación de Secreto Industrial (Art. 402 LFPPI) y Ocultamiento",
+                options: {
+                    A: {
+                        text: "Subir absolutamente todos los prospectos, teléfonos y avances el mismo día, porque la base de datos e historial pertenecen a la infraestructura de la firma.",
+                        points: 0,
+                        forensicAnalysis: "CONDUCTA ÍNTEGRA: Transparencia total en el CRM y reconocimiento expreso de que la base de datos es propiedad intelectual e industrial de la inmobiliaria."
+                    },
+                    B: {
+                        text: "Guardar primero los prospectos más calientes en mi libreta o celular personal y subirlos al CRM únicamente cuando ya esté seguro de que van a comprar o firmar exclusiva, para evitar burocracia.",
+                        points: 5,
+                        forensicAnalysis: "ALERTA AMARILLA ('Cajoneo' de Leads): Secuestra la información en su celular personal. Si la operación se cae o decide cerrarla por fuera, Dirección jamás se entera de que el prospecto existió."
+                    },
+                    C: {
+                        text: "Registrar los datos generales en el sistema, pero mantener un respaldo propio en mi computadora o nube personal con todos los teléfonos y documentos por si algún día cambio de agencia o decido independizarme.",
+                        points: 10,
+                        forensicAnalysis: "ALERTA ROJA CRÍTICA: Confesión directa de extracción premeditada de Secreto Industrial (Art. 402 LFPPI). Está armando su propia base de datos a costa de AM Bienes Raíces para llevársela al salir."
+                    }
+                }
+            },
+            {
+                id: 5,
+                cleanCategory: "Escenario 05 • Solicitudes de Valuación y Dictámenes",
+                question: "Un cliente solicita un avalúo comercial urgente, pero considera que el tabulador oficial de Valuamex® está ligeramente fuera de su presupuesto. Te pregunta si conoces otra opción más económica.",
+                vector: "puenteo",
+                legalRisk: "Desvío de Clientes de Valuación y Usurpación de Funciones Técnicas",
+                options: {
+                    A: {
+                        text: "Le explico el valor técnico, respaldo y certeza que ofrece el dictamen de Valuamex®, y si requiere algún ajuste, consulto directamente con Dirección de Valuación qué alternativa institucional podemos ofrecerle.",
+                        points: 0,
+                        forensicAnalysis: "CONDUCTA ÍNTEGRA: Defiende el valor institucional de Valuamex® y escala la negociación de precio por la vía autorizada."
+                    },
+                    B: {
+                        text: "Le consigo a un perito o ingeniero externo que conozco para que se lo haga más barato por fuera y me dé una pequeña comisión por haberle pasado el cliente.",
+                        points: 5,
+                        forensicAnalysis: "ALERTA AMARILLA: Deslealtad comercial directa contra la unidad de negocio Valuamex®, desviando clientes hacia competidores a cambio de dádivas."
+                    },
+                    C: {
+                        text: "Le hago yo mismo una opinión de valor rápida en una hoja sin membrete cobrándole la mitad en efectivo para que no se vaya sin nada.",
+                        points: 10,
+                        forensicAnalysis: "ALERTA ROJA: Práctica pirata de altísimo riesgo. Cobra efectivo al margen de la empresa emitiendo estimaciones sin respaldo técnico, poniendo en riesgo el prestigio de la firma."
+                    }
+                }
+            },
+            {
+                id: 6,
+                cleanCategory: "Escenario 06 • Titularidad de Cartera y Relaciones Comerciales",
+                question: "Si un asesor invirtió tiempo, gasolina de su propio auto y saldo de su celular en atender a un propietario durante dos meses, ¿de quién consideras que es moralmente ese cliente si el asesor decide salir de la inmobiliaria?",
+                vector: "secreto",
+                legalRisk: "Robo de Cartera al Egreso y Violación de Confidencialidad ( Art. 185 CP Edomex)",
+                options: {
+                    A: {
+                        text: "Del asesor, porque él puso su esfuerzo personal, su vehículo y construyó la relación de confianza cara a cara con el propietario.",
+                        points: 10,
+                        forensicAnalysis: "ALERTA ROJA MÁXIMA: Creencia de 'propiedad personal sobre la cartera'. Si este asesor sale de AM Bienes Raíces, tiene 99% de probabilidad de llamar a todos los propietarios para llevárselos."
+                    },
+                    B: {
+                        text: "De la inmobiliaria, ya que el cliente llegó o fue gestionado bajo el respaldo de la marca, la pauta publicitaria, el know-how, los contratos y la estructura de la firma.",
+                        points: 0,
+                        forensicAnalysis: "CONDUCTA ÍNTEGRA: Comprende perfectamente la naturaleza jurídica de la comisión mercantil y respeta la titularidad patrimonial de la agencia sobre sus clientes."
+                    },
+                    C: {
+                        text: "De quien logre convencer al propietario; en el libre mercado es válido llamarle al salir de la empresa para ofrecerle cambiarse de agencia con una comisión más baja.",
+                        points: 5,
+                        forensicAnalysis: "ALERTA AMARILLA: Justifica la competencia desleal y el contacto post-terminación amparándose en una falsa idea de 'libre mercado'. Requiere firmar convenio con pena convencional estricta."
+                    }
+                }
+            },
+            {
+                id: 7,
+                cleanCategory: "Escenario 07 • Clima Organizacional y Compañerismo",
+                question: "Te enteras de que otro asesor del equipo de AM Bienes Raíces / Valuamex® está cerrando una renta por fuera sin reportarla a Dirección porque argumenta que «tuvo un gasto familiar urgente y la empresa cobra mucha comisión». ¿Cuál es tu postura?",
+                vector: "proyeccion",
+                legalRisk: "Encubrimiento, Complicidad Interna y Tolerancia al Fraude",
+                options: {
+                    A: {
+                        text: "No me meto ni digo nada; cada quien sabe sus necesidades económicas y entre compañeros no debemos perjudicarnos.",
+                        points: 10,
+                        forensicAnalysis: "ALERTA ROJA: Pacto de silencio e identificación con el infractor. En psicometría de integridad, quien valida el robo de un colega por 'necesidad económica' hará exactamente lo mismo cuando tenga una urgencia."
+                    },
+                    B: {
+                        text: "Hablo con él en privado para aconsejarle que tenga cuidado de que no lo descubran, pero respeto su decisión porque todos hemos pasado por rachas difíciles.",
+                        points: 5,
+                        forensicAnalysis: "ALERTA AMARILLA: Empatía mal encauzada hacia el fraude. No solo encubre el desvío, sino que alerta al infractor para que oculte mejor su falta frente a Dirección."
+                    },
+                    C: {
+                        text: "Lo reporto de inmediato y de forma confidencial a Dirección, ya que el desvío de operaciones daña la reputación de la marca, reduce el presupuesto de marketing del equipo y constituye un delito.",
+                        points: 0,
+                        forensicAnalysis: "CONDUCTA ÍNTEGRA: Lealtad institucional y cero tolerancia a la corrupción interna."
+                    }
+                }
+            },
+            {
+                id: 8,
+                cleanCategory: "Escenario 08 • Captaciones Especiales y Manejo de Llaves",
+                question: "Un propietario te entrega las llaves y copias de escrituras de su propiedad, pero te pide que «aún no la subas al sistema ni pongas lona» porque primero quiere ver si la vendes entre tus conocidos discretamente.",
+                vector: "secreto",
+                legalRisk: "Ocultamiento de Inventario ('Cajoneo') y Administración Fraudulenta",
+                options: {
+                    A: {
+                        text: "Guardo el expediente en mi casa y la ofrezco solo por mi WhatsApp personal durante el primer mes; si se vende rápido, me ahorro el trámite interno.",
+                        points: 10,
+                        forensicAnalysis: "ALERTA ROJA: Sustracción física de expedientes y llaves para operar una 'inmobiliaria paralela' desde su WhatsApp personal sin reportar a la empresa."
+                    },
+                    B: {
+                        text: "Ingreso el expediente a Dirección bajo estatus de 'Comercialización Discreta / Off-Market', firmando el contrato de prestación de servicios para que la operación esté registrada y auditada aunque no se publique en portales.",
+                        points: 0,
+                        forensicAnalysis: "CONDUCTA ÍNTEGRA: Soluciona la petición de privacidad del cliente manteniendo el control documental, las llaves y el contrato dentro de Dirección."
+                    },
+                    C: {
+                        text: "La promuevo con mis colegas de otras inmobiliarias externas bajo acuerdo verbal de compartirnos la comisión al 50/50 en cuanto salga comprador.",
+                        points: 5,
+                        forensicAnalysis: "ALERTA AMARILLA: Filtra propiedades no registradas hacia asesores externos para repartirse la comisión fuera de la contabilidad de AM Bienes Raíces."
+                    }
+                }
+            },
+            {
+                id: 9,
+                cleanCategory: "Escenario 09 • Percepción del Mercado Inmobiliario",
+                question: "Según tu experiencia en el sector inmobiliario, ¿qué porcentaje de asesores crees que se lleva bases de datos o cierra alguna operación «por fuera» cuando cree que el Director no se va a enterar?",
+                vector: "proyeccion",
+                legalRisk: "Indicador Psicométrico de Proyección (Efecto del Falso Consenso)",
+                options: {
+                    A: {
+                        text: "Menos del 5%; es una falta de probidad grave y quien lo hace termina quemado en el gremio o con problemas legales.",
+                        points: 0,
+                        forensicAnalysis: "CONDUCTA ÍNTEGRA: El candidato honesto percibe la honestidad como la norma estándar del gremio y reconoce las consecuencias legales del desvío."
+                    },
+                    B: {
+                        text: "Entre el 30% y el 50%; es algo bastante común cuando las guardias están flojas o el asesor siente que hace todo el trabajo.",
+                        points: 5,
+                        forensicAnalysis: "ALERTA AMARILLA (Proyección Moderada): Normaliza la deshonestidad y la justifica cuando 'las guardias están flojas' o siente que su comisión es baja."
+                    },
+                    C: {
+                        text: "Más del 60%; prácticamente todos los asesores en algún momento han cerrado un trato o gestoría por su cuenta para compensar sus gastos.",
+                        points: 10,
+                        forensicAnalysis: "ALERTA ROJA (Proyección Directa - Método Reid): En psicología forense, quien afirma que 'casi todos roban (+60%)' está proyectando su propia conducta habitual para neutralizar su culpa."
+                    }
+                }
+            },
+            {
+                id: 10,
+                cleanCategory: "Escenario 10 • Círculo de Influencia Personal",
+                question: "Un familiar cercano o amigo tuyo quiere vender su casa en tu ciudad. Como es gente de tu círculo personal y no llegó por publicidad de la empresa, ¿cómo procedes?",
+                vector: "cruzada",
+                legalRisk: "Fraude por Uso Indebido de Papelería/Contratos y Competencia Paralela",
+                options: {
+                    A: {
+                        text: "Lo llevo totalmente por fuera en mis ratos libres cobrándole una comisión simbólica solo para mí, pues la inmobiliaria no invirtió en captarlo.",
+                        points: 5,
+                        forensicAnalysis: "ALERTA AMARILLA: Compite contra su propia agencia en la misma zona geográfica (tu ciudad), desviando tiempo productivo y posibles compradores hacia su negocio personal."
+                    },
+                    B: {
+                        text: "Lo ingreso formalmente a AM Bienes Raíces / Valuamex® para darle certeza jurídica, marketing profesional y seguridad en el cierre, solicitando a Dirección el esquema de comisión correspondiente a captación propia.",
+                        points: 0,
+                        forensicAnalysis: "CONDUCTA ÍNTEGRA: Alinea sus relaciones personales con la estructura formal de la empresa, aprovechando el esquema de bonificación por captación propia."
+                    },
+                    C: {
+                        text: "Uso los formatos de contratos y avisos de privacidad de la oficina para armarle su compraventa por fuera y así ayudarlo sin que le cueste la comisión de la empresa.",
+                        points: 10,
+                        forensicAnalysis: "ALERTA ROJA: Sustracción y uso ilícito de propiedad intelectual y contratos jurídicos de AM Bienes Raíces / Valuamex® para respaldar operaciones clandestinas."
+                    }
+                }
+            },
+            {
+                id: 11,
+                cleanCategory: "Escenario 11 • Conocimiento Legal: Contrato de Confidencialidad",
+                question: "¿Cuál es el objetivo principal de firmar un Contrato de Confidencialidad (NDA) o cláusula de Secreto Industrial al ingresar a una firma inmobiliaria?",
+                vector: "secreto",
+                legalRisk: "Conocimiento Normativo sobre Confidencialidad y Secreto Industrial",
+                options: {
+                    A: {
+                        text: "Prohibir que el asesor trabaje en bienes raíces si decide renunciar para que la empresa no tenga competencia.",
+                        points: 10,
+                        forensicAnalysis: "ALERTA ROJA: Desconoce la naturaleza de la confidencialidad, confundiéndola con prohibición laboral. Puede indicar que no respeta el acuerdo por considerarlo 'injusto'."
+                    },
+                    B: {
+                        text: "Proteger las bases de datos de clientes, manuales de operación y estrategias comerciales de la empresa, evitando su extracción o uso no autorizado.",
+                        points: 0,
+                        forensicAnalysis: "CONDUCTA ÍNTEGRA: Comprensión técnica perfecta de lo que ampara la confidencialidad y el Secreto Industrial de AM Bienes Raíces."
+                    },
+                    C: {
+                        text: "Es solo un formalismo de recursos humanos que no tiene validez legal si el asesor decide llevarse los teléfonos de los clientes que él mismo consiguió.",
+                        points: 5,
+                        forensicAnalysis: "ALERTA AMARILLA: Minimiza el peso legal del NDA, asumiendo erróneamente que la cartera generada por él le pertenece de forma privada."
+                    }
+                }
+            },
+            {
+                id: 12,
+                cleanCategory: "Escenario 12 • Conocimiento Legal: Promesa de Compraventa",
+                question: "Jurídicamente, ¿cuál es la función esencial de un Contrato de Promesa de Compraventa en una operación inmobiliaria?",
+                vector: "puenteo",
+                legalRisk: "Conocimiento Normativo sobre Obligaciones Contractuales",
+                options: {
+                    A: {
+                        text: "Transmitir inmediatamente la propiedad al comprador desde el momento en que se firma y se entrega el apartado.",
+                        points: 5,
+                        forensicAnalysis: "ALERTA AMARILLA: Error conceptual grave que puede meter en problemas legales a la empresa por prometer transmisión de dominio antes de la escrituración formal."
+                    },
+                    B: {
+                        text: "Obligar a ambas partes a celebrar el contrato definitivo de compraventa en un tiempo determinado, fijando precio, condiciones y penalizaciones si alguna parte incumple.",
+                        points: 0,
+                        forensicAnalysis: "CONDUCTA ÍNTEGRA: Entendimiento sólido y certero de la figura jurídica de la Promesa de Compraventa, blindando la operación."
+                    },
+                    C: {
+                        text: "Permitir al asesor cobrar su comisión por adelantado sin importar si la venta se concreta o si la propiedad tiene problemas legales.",
+                        points: 10,
+                        forensicAnalysis: "ALERTA ROJA: Enfoque mercenario. Ve los contratos no como un instrumento para proteger a los clientes, sino como una herramienta egoísta para asegurar su pago prematuro."
+                    }
+                }
+            },
+            {
+                id: 13,
+                cleanCategory: "Escenario 13 • Conocimiento Legal: Contrato de No Competencia",
+                question: "En el ámbito de la intermediación inmobiliaria, ¿qué alcance tiene una cláusula o Contrato de No Competencia firmado con la agencia?",
+                vector: "secreto",
+                legalRisk: "Conocimiento Normativo sobre Lealtad y No Competencia Desleal",
+                options: {
+                    A: {
+                        text: "Ninguno, porque la ley permite el libre mercado, así que puedo salir y contactar inmediatamente a los clientes de la agencia para ofrecerles mis servicios.",
+                        points: 10,
+                        forensicAnalysis: "ALERTA ROJA: Justificación activa de la competencia desleal y robo de cartera amparándose en una falsa idea del 'libre mercado'."
+                    },
+                    B: {
+                        text: "Restringir temporalmente al ex-colaborador de usar la información, inventario y cartera de clientes de la empresa para competir de forma directa o desleal en la misma zona.",
+                        points: 0,
+                        forensicAnalysis: "CONDUCTA ÍNTEGRA: Comprensión clara de los límites éticos y legales posteriores a la separación de la firma inmobiliaria."
+                    },
+                    C: {
+                        text: "Evitar que el asesor hable mal de la inmobiliaria en redes sociales, aunque sí pueda llevarse los expedientes que él armó.",
+                        points: 5,
+                        forensicAnalysis: "ALERTA AMARILLA: Confunde las cláusulas de no difamación con las de no competencia, manteniendo la creencia de que puede apropiarse de expedientes."
+                    }
+                }
+            },
+            {
+                id: 14,
+                cleanCategory: "Escenario 14 • Conocimiento Legal: Fraude y Robo de Cartera",
+                question: "Si un asesor en funciones desvía un cliente comprador que contactó a la agencia y le vende una propiedad que no está en el inventario para cobrar la comisión por su cuenta, ¿cómo se tipifica esta acción?",
+                vector: "cruzada",
+                legalRisk: "Prevención de Fraude, Abuso de Confianza y Competencia Desleal",
+                options: {
+                    A: {
+                        text: "Es un delito de fraude y/o abuso de confianza, ya que se está lucrando indebidamente con los recursos (leads) pagados por la empresa, perjudicando su patrimonio.",
+                        points: 0,
+                        forensicAnalysis: "CONDUCTA ÍNTEGRA: Conciencia plena de la gravedad penal y civil de desviar leads o robar oportunidades comerciales a la agencia."
+                    },
+                    B: {
+                        text: "Es una simple falta administrativa o de ética, pero no es un delito porque la propiedad que se vendió no era de la inmobiliaria.",
+                        points: 5,
+                        forensicAnalysis: "ALERTA AMARILLA: Intento de minimizar un delito patrimonial (robo de lead) bajo el argumento de que el producto final no era de la empresa."
+                    },
+                    C: {
+                        text: "Es una práctica comercial inteligente, pues el asesor aprovechó un prospecto que la inmobiliaria no pudo cerrar con su inventario actual.",
+                        points: 10,
+                        forensicAnalysis: "ALERTA ROJA: Racionalización severa del fraude interno. El candidato avala usar la pauta publicitaria de la agencia para enriquecerse de manera independiente."
+                    }
+                }
+            },
+            {
+                id: 15,
+                cleanCategory: "Escenario 15 • Conocimiento Legal: Implicaciones del Fraude Interno",
+                question: "¿Qué consecuencia legal enfrenta un asesor que sustrae expedientes, contratos o base de datos de clientes de la inmobiliaria para iniciar su propio negocio o pasarlos a la competencia?",
+                vector: "secreto",
+                legalRisk: "Sustracción de Secreto Industrial (Art. 402 LFPPI) e Ilícitos Penales",
+                options: {
+                    A: {
+                        text: "Solamente el despido inmediato, ya que las bases de datos de clientes no se pueden proteger legalmente si el asesor los atendió personalmente.",
+                        points: 5,
+                        forensicAnalysis: "ALERTA AMARILLA: Ignora la Ley Federal de Protección a la Propiedad Industrial (LFPPI) y asume un riesgo muy bajo ante la sustracción de datos."
+                    },
+                    B: {
+                        text: "Ninguna consecuencia real, ya que en la práctica es muy difícil que una inmobiliaria demande a un ex-asesor por llevarse clientes.",
+                        points: 10,
+                        forensicAnalysis: "ALERTA ROJA: Sensación de impunidad absoluta. Cree que el robo de información industrial no tiene consecuencias jurídicas y está dispuesto a cometerlo."
+                    },
+                    C: {
+                        text: "Consecuencias penales por robo de secreto industrial, abuso de confianza y revelación de secretos, además del pago por la reparación de daños y perjuicios a la empresa.",
+                        points: 0,
+                        forensicAnalysis: "CONDUCTA ÍNTEGRA: Entiende a la perfección las severas consecuencias penales y civiles de sustraer los activos intangibles de Valuamex®."
+                    }
+                }
+            }
+        ];
+
+        // =========================================================================
+        // ESTADO DE LA APLICACIÓN
+        // =========================================================================
+        let state = {
+            name: "",
+            role: "Asesor Inmobiliario Activo",
+            branch: "",
+            date: "10/Nov/2026",
+            currentQuestionIndex: 0,
+            answers: {}, // { 1: 'B', 2: 'A', ... }
+            signature: null // Almacena la imagen base64 de la firma
+        };
+
+        const MASTER_PIN = "2026";
+        let timerInterval = null;
+        let timeRemaining = 900; // 15 minutos en segundos
+
+        // =========================================================================
+        // LÓGICA DEL CRONÓMETRO
+        // =========================================================================
+        function startTimer() {
+            timeRemaining = 900;
+            document.getElementById('timer-text').textContent = "15:00";
+            const timerBadge = document.getElementById('timer-badge');
+            timerBadge.classList.remove('hidden');
+            timerBadge.classList.add('flex');
+            
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                let m = Math.floor(timeRemaining / 60);
+                let s = timeRemaining % 60;
+                document.getElementById('timer-text').textContent = 
+                    m.toString().padStart(2, '0') + ':' + s.toString().padStart(2, '0');
+                
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    handleTimeout();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            const timerBadge = document.getElementById('timer-badge');
+            timerBadge.classList.add('hidden');
+            timerBadge.classList.remove('flex');
+        }
+
+        function handleTimeout() {
+            document.getElementById('timeout-warning').classList.remove('hidden');
+            showSignatureView();
+        }
+
+        // =========================================================================
+        // LÓGICA DEL PAD DE FIRMAS
+        // =========================================================================
+        let canvas, ctx;
+        let isDrawing = false;
+        let hasSignature = false;
+
+        function resizeSignatureCanvas() {
+            if(!canvas) return;
+            const rect = canvas.parentElement.getBoundingClientRect();
+            // Solo redimensionar si es visible y el ancho cambió (evita borrar firma al hacer scroll en móviles)
+            if (rect.width > 0 && canvas.width !== rect.width) {
+                canvas.width = rect.width;
+                canvas.height = 160; // Coincide con h-40
+                ctx.lineWidth = 2.5;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.strokeStyle = '#0f172a'; // navy-900
+            }
+        }
+
+        window.addEventListener('load', () => {
+            canvas = document.getElementById('signature-pad');
+            if(!canvas) return;
+            ctx = canvas.getContext('2d');
+
+            // Eventos de Ratón
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+
+            // Eventos Táctiles (Móviles/Tablets)
+            canvas.addEventListener('touchstart', handleTouchStart, {passive: false});
+            canvas.addEventListener('touchmove', handleTouchMove, {passive: false});
+            canvas.addEventListener('touchend', stopDrawing);
+        });
+
+        function getMousePos(evt) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: evt.clientX - rect.left,
+                y: evt.clientY - rect.top
+            };
+        }
+        
+        function getTouchPos(evt) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: evt.touches[0].clientX - rect.left,
+                y: evt.touches[0].clientY - rect.top
+            };
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            hasSignature = true;
+            const err = document.getElementById('signature-error');
+            if (err) err.classList.add('hidden');
+            const pos = getMousePos(e);
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const pos = getMousePos(e);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        }
+        
+        function handleTouchStart(e) {
+            e.preventDefault(); // Prevenir scroll de la pantalla
+            isDrawing = true;
+            hasSignature = true;
+            const err = document.getElementById('signature-error');
+            if (err) err.classList.add('hidden');
+            const pos = getTouchPos(e);
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+        }
+        
+        function handleTouchMove(e) {
+            e.preventDefault();
+            if (!isDrawing) return;
+            const pos = getTouchPos(e);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        }
+
+        function stopDrawing() {
+            if (isDrawing) {
+                ctx.closePath();
+                isDrawing = false;
+            }
+        }
+
+        function clearSignature() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            hasSignature = false;
+            state.signature = null;
+        }
+
+        // =========================================================================
+        // FUNCIONES DE GENERACIÓN DE PDF
+        // =========================================================================
+        function descargarPDF() {
+            const element = document.getElementById('view-forensic');
+            const btn = document.getElementById('btn-download-pdf');
+            const originalText = btn.innerHTML;
+            
+            // Cambiar estado del botón
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Generando...</span>';
+            btn.disabled = true;
+
+            // Ocultar la botonera para que no salga en el PDF impreso
+            const actionButtons = document.getElementById('forensic-actions');
+            if (actionButtons) actionButtons.style.display = 'none';
+            
+            // También ocultamos el header principal si queremos que el PDF sea más limpio
+            const mainHeader = document.getElementById('main-header');
+            if (mainHeader) mainHeader.style.display = 'none';
+
+            // Configuración del PDF
+            const safeName = state.name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+            const opt = {
+                margin:       [10, 10, 15, 10], // top, left, bottom, right
+                filename:     `Dictamen_Forense_${safeName || 'evaluacion'}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, windowWidth: 1024 }, // scale 2 para mejor resolución
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Generar y guardar
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Restaurar interfaz
+                if (actionButtons) actionButtons.style.display = 'flex';
+                if (mainHeader) mainHeader.style.display = 'block';
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }).catch(err => {
+                console.error("Error al generar PDF: ", err);
+                alert("Ocurrió un error al intentar generar el PDF. Por favor, intente de nuevo.");
+                if (actionButtons) actionButtons.style.display = 'flex';
+                if (mainHeader) mainHeader.style.display = 'block';
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+        }
+
+
+        // =========================================================================
+        // FUNCIONES DE FLUJO DEL ASESOR
+        // =========================================================================
+        function startAssessment() {
+            const nameInput = document.getElementById('input-name').value.trim();
+            const roleInput = document.getElementById('input-role').value;
+            const branchInput = document.getElementById('input-branch').value.trim();
+            const errorBox = document.getElementById('welcome-error');
+
+            if (!nameInput) {
+                errorBox.classList.remove('hidden');
+                document.getElementById('input-name').focus();
+                return;
+            }
+            
+            errorBox.classList.add('hidden');
+
+            state.name = nameInput;
+            state.role = roleInput;
+            state.branch = branchInput || "No especificada";
+            state.currentQuestionIndex = 0;
+            state.answers = {};
+            state.signature = null; // Reiniciar firma en estado interno
+
+            document.getElementById('view-welcome').classList.add('hidden');
+            document.getElementById('view-quiz').classList.remove('hidden');
+            document.getElementById('progress-container').classList.remove('hidden');
+            document.getElementById('quiz-user-display').textContent = state.name;
+
+            startTimer(); // Iniciar el cronómetro
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = QUESTIONS_DATA[state.currentQuestionIndex];
+            const total = QUESTIONS_DATA.length;
+
+            // Actualizar textos superiores
+            document.getElementById('badge-question-num').textContent = `Caso ${state.currentQuestionIndex + 1} de ${total}`;
+            document.getElementById('question-category-clean').textContent = q.cleanCategory;
+            document.getElementById('question-text').textContent = q.question;
+            document.getElementById('quiz-alert').classList.add('hidden');
+
+            // Barra de progreso
+            const progressPercent = ((state.currentQuestionIndex) / total) * 100;
+            document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+
+            // Puntos indicadores
+            const dotsContainer = document.getElementById('question-dots');
+            dotsContainer.innerHTML = '';
+            QUESTIONS_DATA.forEach((item, idx) => {
+                const dot = document.createElement('span');
+                const isAnswered = state.answers[item.id] !== undefined;
+                const isCurrent = idx === state.currentQuestionIndex;
+                dot.className = `w-2.5 h-2.5 rounded-full transition-all ${
+                    isCurrent ? 'bg-brand-blue scale-125 ring-2 ring-brand-blue/40' : 
+                    isAnswered ? 'bg-navy-900' : 'bg-slate-200'
+                }`;
+                dotsContainer.appendChild(dot);
+            });
+
+            // Renderizar opciones A, B, C
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            const selectedOption = state.answers[q.id];
+
+            ['A', 'B', 'C'].forEach(letter => {
+                const optData = q.options[letter];
+                const isSelected = selectedOption === letter;
+
+                const card = document.createElement('div');
+                card.onclick = () => selectOption(q.id, letter);
+                card.className = `option-card cursor-pointer rounded-xl border-2 p-4 sm:p-5 flex items-start gap-4 ${
+                    isSelected ? 'option-selected' : 'border-slate-200 hover:border-slate-300 bg-white'
+                }`;
+
+                card.innerHTML = `
+                    <div class="w-8 h-8 rounded-lg shrink-0 flex items-center justify-center font-bold text-sm transition ${
+                        isSelected ? 'bg-brand-blue text-white shadow-sm' : 'bg-slate-100 text-slate-600'
+                    }">
+                        ${letter}
+                    </div>
+                    <div class="text-sm sm:text-base text-slate-700 leading-relaxed font-medium select-none">
+                        ${optData.text}
+                    </div>
+                `;
+                optionsContainer.appendChild(card);
+            });
+
+            // Estado de botones Anterior / Siguiente
+            const btnPrev = document.getElementById('btn-prev');
+            btnPrev.style.visibility = state.currentQuestionIndex === 0 ? 'hidden' : 'visible';
+
+            const btnNextText = document.getElementById('btn-next-text');
+            if (state.currentQuestionIndex === total - 1) {
+                btnNextText.textContent = "Finalizar y Enviar Evaluación";
+            } else {
+                btnNextText.textContent = "Siguiente Caso";
+            }
+        }
+
+        function selectOption(questionId, letter) {
+            state.answers[questionId] = letter;
+            document.getElementById('quiz-alert').classList.add('hidden');
+            renderQuestion();
+        }
+
+        function prevQuestion() {
+            if (state.currentQuestionIndex > 0) {
+                state.currentQuestionIndex--;
+                renderQuestion();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function nextQuestion() {
+            const currentQ = QUESTIONS_DATA[state.currentQuestionIndex];
+            if (!state.answers[currentQ.id]) {
+                document.getElementById('quiz-alert').classList.remove('hidden');
+                return;
+            }
+
+            if (state.currentQuestionIndex < QUESTIONS_DATA.length - 1) {
+                state.currentQuestionIndex++;
+                renderQuestion();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                showSignatureView();
+            }
+        }
+
+        function showSignatureView() {
+            stopTimer(); // Detener el cronómetro si el usuario llega a tiempo
+            document.getElementById('progress-bar').style.width = '100%';
+            document.getElementById('view-quiz').classList.add('hidden');
+            document.getElementById('view-signature').classList.remove('hidden');
+            // Ajustar el tamaño interno del canvas ahora que es visible
+            setTimeout(resizeSignatureCanvas, 50);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function finishAssessment() {
+            if (!hasSignature) {
+                document.getElementById('signature-error').classList.remove('hidden');
+                return;
+            }
+
+            // Guardar firma en estado
+            state.signature = canvas.toDataURL('image/png');
+
+            document.getElementById('view-signature').classList.add('hidden');
+            document.getElementById('view-completion').classList.remove('hidden');
+
+            // Generar Folio Codificado en Base64 para envío remoto
+            const token = encodeStateToToken();
+            document.getElementById('completion-token').value = token;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function resetAssessment() {
+            state.answers = {};
+            state.currentQuestionIndex = 0;
+            document.getElementById('input-name').value = '';
+            document.getElementById('input-branch').value = '';
+            clearSignature();
+            stopTimer(); // Detener el cronómetro por si acaso
+            document.getElementById('timeout-warning').classList.add('hidden');
+            document.getElementById('view-completion').classList.add('hidden');
+            document.getElementById('view-signature').classList.add('hidden');
+            document.getElementById('view-forensic').classList.add('hidden');
+            document.getElementById('progress-container').classList.add('hidden');
+            document.getElementById('view-welcome').classList.remove('hidden');
+        }
+
+        // =========================================================================
+        // CODIFICACIÓN Y DECODIFICACIÓN DE FOLIO REMOTO
+        // (Nota: No se incluye la firma base64 en el token para evitar enlaces muy largos)
+        // =========================================================================
+        // CODIFICACIÓN Y DECODIFICACIÓN DE FOLIO REMOTO
+        // =========================================================================
+        function encodeStateToToken() {
+            const payload = {
+                n: state.name,
+                r: state.role,
+                b: state.branch,
+                d: state.date,
+                a: state.answers
+            };
+            const jsonStr = JSON.stringify(payload);
+            const b64 = btoa(unescape(encodeURIComponent(jsonStr)));
+            return `AMV-${b64}`;
+        }
+
+        function decodeTokenToState(tokenStr) {
+            try {
+                const clean = tokenStr.trim().replace(/^AMV-/, '');
+                const jsonStr = decodeURIComponent(escape(atob(clean)));
+                const payload = JSON.parse(jsonStr);
+                if (!payload.n || !payload.a) return false;
+                state.name = payload.n;
+                state.role = payload.r || "Asesor Inmobiliario";
+                state.branch = payload.b || "No especificada";
+                state.date = payload.d || "10/Nov/2026";
+                state.answers = payload.a;
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function copyToken() {
+            const tokenInput = document.getElementById('completion-token');
+            tokenInput.select();
+            tokenInput.setSelectionRange(0, 99999);
+            document.execCommand('copy');
+
+            const label = document.getElementById('copy-btn-label');
+            label.textContent = "¡Copiado!";
+            setTimeout(() => {
+                label.textContent = "Copiar";
+            }, 2000);
+        }
+
+        // =========================================================================
+        // ACCESO Y PANEL FORENSE DE DIRECCIÓN (PIN: 2026)
+        // =========================================================================
+        function openPinModal() {
+            document.getElementById('input-pin').value = '';
+            document.getElementById('input-remote-token').value = '';
+            document.getElementById('pin-error').classList.add('hidden');
+            const modal = document.getElementById('modal-pin');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => document.getElementById('input-pin').focus(), 100);
+        }
+
+        function openDecodeModal() {
+            openPinModal();
+            document.getElementById('input-pin').value = MASTER_PIN;
+            setTimeout(() => document.getElementById('input-remote-token').focus(), 100);
+        }
+
+        function closePinModal() {
+            const modal = document.getElementById('modal-pin');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function verifyPinAndOpenForensic() {
+            const pin = document.getElementById('input-pin').value.trim();
+            const remoteToken = document.getElementById('input-remote-token').value.trim();
+            const err = document.getElementById('pin-error');
+
+            if (pin !== MASTER_PIN) {
+                err.textContent = "PIN de Dirección incorrecto (PIN por defecto: 2026).";
+                err.classList.remove('hidden');
+                return;
+            }
+
+            if (remoteToken) {
+                const ok = decodeTokenToState(remoteToken);
+                if (!ok) {
+                    err.textContent = "El Folio de Sincronización ingresado no es válido o está incompleto.";
+                    err.classList.remove('hidden');
+                    return;
+                }
+            } else if (Object.keys(state.answers).length === 0) {
+                // Si el Director entra sin haber contestado nada, cargamos una simulación de demostración
+                state.name = "Demostración Auditoría (Sin evaluar aún)";
+                state.role = "Asesor Inmobiliario (Simulación)";
+                state.branch = "Centro / Matriz";
+                state.answers = { 1: 'B', 2: 'B', 3: 'B', 4: 'B', 5: 'A', 6: 'A', 7: 'B', 8: 'B', 9: 'B', 10: 'B' };
+            }
+
+            closePinModal();
+            renderForensicDashboard();
+        }
+
+        function exitForensicView() {
+            document.getElementById('view-forensic').classList.add('hidden');
+            document.getElementById('header-subtitle').textContent = "Dirección de Desarrollo Comercial y Operaciones";
+            if (Object.keys(state.answers).length === QUESTIONS_DATA.length && state.name !== "Demostración Auditoría (Sin evaluar aún)") {
+                document.getElementById('view-completion').classList.remove('hidden');
+            } else {
+                resetAssessment();
+            }
+        }
+
+        function renderForensicDashboard() {
+            // Ocultar vistas de asesor y mostrar vista forense
+            document.getElementById('view-welcome').classList.add('hidden');
+            document.getElementById('view-quiz').classList.add('hidden');
+            document.getElementById('view-completion').classList.add('hidden');
+            document.getElementById('progress-container').classList.add('hidden');
+            document.getElementById('view-forensic').classList.remove('hidden');
+            document.getElementById('header-subtitle').textContent = "MODO AUDITORÍA FORENSE • DIRECCIÓN GENERAL";
+
+            // Calcular puntajes
+            let totalScore = 0;
+            let redAlerts = 0;
+            let yellowAlerts = 0;
+
+            const vectorScores = {
+                puenteo: { current: 0, max: 40, title: "Riesgo de 'Puenteo' y Efectivo en Mano", desc: "Reactivos 1, 2, 5 y 12 • Abuso de confianza y cobros al margen de la firma." },
+                secreto: { current: 0, max: 60, title: "Robo de Secreto Industrial y Cartera CRM", desc: "Reactivos 4, 6, 8, 11, 13 y 15 • Extracción de bases de datos, 'cajoneo' y contacto al salir." },
+                cruzada: { current: 0, max: 30, title: "Desvío de Leads y Uso Ilícito de Marca", desc: "Reactivos 3, 10 y 14 • Gestorías por fuera con leads de guardia o papelería oficial." },
+                proyeccion: { current: 0, max: 20, title: "Tolerancia al Fraude y Proyección (Reid)", desc: "Reactivos 7 y 9 • Encubrimiento entre asesores y normalización del robo." }
+            };
+
+            QUESTIONS_DATA.forEach(q => {
+                const chosenLetter = state.answers[q.id];
+                if (chosenLetter && q.options[chosenLetter]) {
+                    const pts = q.options[chosenLetter].points;
+                    totalScore += pts;
+                    if (pts === 10) redAlerts++;
+                    if (pts === 5) yellowAlerts++;
+                    vectorScores[q.vector].current += pts;
+                }
+            });
+
+            // Llenar ficha de datos
+            document.getElementById('forensic-name').textContent = state.name;
+            document.getElementById('forensic-role').textContent = state.role;
+            document.getElementById('forensic-branch').textContent = state.branch;
+            document.getElementById('forensic-date').textContent = state.date;
+            document.getElementById('forensic-red-count').textContent = `${redAlerts} alertas críticas`;
+            document.getElementById('forensic-yellow-count').textContent = `${yellowAlerts} alertas moderadas`;
+            document.getElementById('forensic-token-short').textContent = encodeStateToToken();
+            document.getElementById('forensic-total-score').textContent = totalScore;
+
+            // Mostrar u ocultar la firma (según si se evaluó local o se cargó un folio remoto sin firma)
+            const sigImg = document.getElementById('forensic-signature');
+            const sigMissing = document.getElementById('forensic-signature-missing');
+            
+            if (state.signature) {
+                sigImg.src = state.signature;
+                sigImg.classList.remove('hidden');
+                sigMissing.classList.add('hidden');
+            } else {
+                sigImg.classList.add('hidden');
+                sigMissing.classList.remove('hidden');
+            }
+
+            // Configurar Semáforo Principal
+            const semCard = document.getElementById('forensic-semaphore-card');
+            const badge = document.getElementById('forensic-badge');
+            const title = document.getElementById('forensic-verdict-title');
+            const desc = document.getElementById('forensic-verdict-desc');
+            const action = document.getElementById('forensic-action-plan');
+
+            semCard.className = "lg:col-span-2 rounded-2xl p-6 shadow-sm border-2 flex flex-col justify-between ";
+
+            if (totalScore <= 10) {
+                semCard.classList.add('bg-emerald-50', 'border-emerald-400', 'text-emerald-950');
+                badge.className = "inline-block text-xs font-extrabold uppercase tracking-wider px-3 py-1 rounded-full mb-2 bg-emerald-600 text-white";
+                badge.innerHTML = '<i class="fa-solid fa-shield-check mr-1"></i> SEMÁFORO VERDE (0 - 10 PTS)';
+                title.textContent = "Perfil Íntegro / Institucionalmente Alineado";
+                desc.textContent = "El evaluado demuestra apego estricto a los conductos oficiales de AM Bienes Raíces / Valuamex®. Reconoce que la cartera y los leads pertenecen a la firma, rechaza recibir efectivo en cuentas personales y reprueba el desvío de operaciones.";
+                action.textContent = "APTO PARA CONTRATACIÓN O ASIGNACIÓN DE CARTERA PREMIUM: Mantener supervisión estándar en CRM y respaldar con contrato de comisión mercantil vigente.";
+            } else if (totalScore <= 35) {
+                semCard.classList.add('bg-amber-50', 'border-amber-400', 'text-amber-950');
+                badge.className = "inline-block text-xs font-extrabold uppercase tracking-wider px-3 py-1 rounded-full mb-2 bg-amber-500 text-white";
+                badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1"></i> SEMÁFORO AMARILLO (15 - 35 PTS)';
+                title.textContent = "Riesgo Moderado / Perfil «Lobo Solitario»";
+                desc.textContent = "El evaluado presenta racionalizaciones peligrosas: tiende a guardar prospectos en su celular antes de subirlos al CRM, considera que su esfuerzo personal le da derechos sobre el cliente o tolera faltas de compañeros.";
+                action.textContent = "ACCIÓN PREVENTIVA OBLIGATORIA: 1) No entregar expedientes originales ni llaves sin registro previo en CRM; 2) Auditar quincenalmente los prospectos que marque como 'dados de baja'; 3) Hacer firmar adendum de Secreto Industrial.";
+            } else {
+                semCard.classList.add('bg-red-50', 'border-red-500', 'text-red-950');
+                badge.className = "inline-block text-xs font-extrabold uppercase tracking-wider px-3 py-1 rounded-full mb-2 bg-red-600 text-white";
+                badge.innerHTML = '<i class="fa-solid fa-skull-crossbones mr-1"></i> ALERTA ROJA (40+ PTS)';
+                title.textContent = "Alto Riesgo de Mala Praxis y Desvío Activo de Cartera";
+                desc.textContent = "El evaluado justifica psicológicamente el robo de clientes, la recepción de dinero en cuentas propias, el respaldo clandestino de bases de datos (Secreto Industrial) y el 'puenteo' con propietarios.";
+                action.textContent = " PROTOCOLO DE CONTENCIÓN INMEDIATA: Si es candidato, NO CONTRATAR. Si es asesor activo: 1) Revocar accesos a CRM y Drive hoy mismo; 2) Llamar directamente a los últimos 15 propietarios/leads que atendió para verificar que no les haya cobrado por fuera; 3) Citar a firma de Convenio de Terminación con Tasación de Cartera y Pagaré autónomo.";
+            }
+
+            // Renderizar Barras de Vectores
+            const vectorsContainer = document.getElementById('vectors-container');
+            vectorsContainer.innerHTML = '';
+            Object.values(vectorScores).forEach(vec => {
+                const pct = Math.round((vec.current / vec.max) * 100);
+                let barColor = "bg-emerald-500";
+                let badgeColor = "text-emerald-700 bg-emerald-100";
+                if (pct >= 50) {
+                    barColor = "bg-red-600";
+                    badgeColor = "text-red-700 bg-red-100";
+                } else if (pct >= 20) {
+                    barColor = "bg-amber-500";
+                    badgeColor = "text-amber-800 bg-amber-100";
+                }
+
+                const vecEl = document.createElement('div');
+                vecEl.className = "p-4 rounded-xl bg-slate-50 border border-slate-200";
+                vecEl.innerHTML = `
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-xs font-bold text-navy-900">${vec.title}</span>
+                        <span class="text-xs font-extrabold px-2 py-0.5 rounded ${badgeColor}">${vec.current} / ${vec.max} pts (${pct}%)</span>
+                    </div>
+                    <p class="text-[11px] text-slate-500 mb-2.5">${vec.desc}</p>
+                    <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                        <div class="${barColor} h-2.5 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+                    </div>
+                `;
+                vectorsContainer.appendChild(vecEl);
+            });
+
+            // Renderizar Desglose Pregunta por Pregunta
+            const breakdownList = document.getElementById('forensic-breakdown-list');
+            breakdownList.innerHTML = '';
+
+            QUESTIONS_DATA.forEach(q => {
+                const chosenLetter = state.answers[q.id] || 'B';
+                const chosenOpt = q.options[chosenLetter];
+                const pts = chosenOpt.points;
+
+                let borderClass = "border-emerald-300 bg-emerald-50/30";
+                let pillClass = "bg-emerald-100 text-emerald-800";
+                let pillText = "0 pts • Íntegro";
+
+                if (pts === 10) {
+                    borderClass = "border-red-300 bg-red-50/40";
+                    pillClass = "bg-red-600 text-white";
+                    pillText = "+10 pts • Alerta Roja";
+                } else if (pts === 5) {
+                    borderClass = "border-amber-300 bg-amber-50/40";
+                    pillClass = "bg-amber-500 text-white";
+                    pillText = "+5 pts • Racionalización";
+                }
+
+                const item = document.createElement('div');
+                item.className = `rounded-xl border-2 p-4 sm:p-5 print-break ${borderClass}`;
+                item.innerHTML = `
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="bg-navy-900 text-white text-xs font-bold px-2.5 py-1 rounded">Caso #${q.id}</span>
+                            <span class="text-xs font-bold text-slate-700">Tipificación Asociada: <strong class="text-navy-900">${q.legalRisk}</strong></span>
+                        </div>
+                        <span class="text-xs font-extrabold px-3 py-1 rounded-full ${pillClass}">
+                            ${pillText}
+                        </span>
+                    </div>
+
+                    <p class="text-xs sm:text-sm font-semibold text-slate-800 mb-3">
+                        ${q.question}
+                    </p>
+
+                    <div class="bg-white rounded-lg p-3 border border-slate-200 mb-2.5">
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                            Respuesta Elegida por el Evaluado (Opción ${chosenLetter}):
+                        </span>
+                        <p class="text-xs sm:text-sm text-navy-900 font-medium">
+                            "${chosenOpt.text}"
+                        </p>
+                    </div>
+
+                    <div class="flex items-start gap-2 text-xs text-slate-700 bg-white/70 p-2.5 rounded-lg border border-black/5">
+                        <i class="fa-solid fa-microscope text-brand-blue mt-0.5"></i>
+                        <div>
+                            <strong class="text-navy-900">Interpretación Forense:</strong> ${chosenOpt.forensicAnalysis}
+                        </div>
+                    </div>
+                `;
+                breakdownList.appendChild(item);
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
