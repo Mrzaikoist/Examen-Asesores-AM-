@@ -1091,21 +1091,37 @@
             const mainHeader = document.getElementById('main-header');
             if (mainHeader) mainHeader.style.display = 'none';
 
+            // SOLUCIÓN PARA MÓVILES: Forzamos el ancho del contenedor a un tamaño de escritorio 
+            // para que Tailwind no apile las columnas y no se corte la imagen.
+            const originalWidth = element.style.width;
+            const originalMaxWidth = element.style.maxWidth;
+            element.style.width = '1024px';
+            element.style.maxWidth = '1024px';
+
             // Configuración del PDF
-            const safeName = state.name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+            const safeName = state.name ? state.name.replace(/[^a-z0-9]/gi, '_').toLowerCase() : 'evaluacion';
             const opt = {
-                margin:       [10, 10, 15, 10], // top, left, bottom, right
-                filename:     `Dictamen_Forense_${safeName || 'evaluacion'}.pdf`,
+                margin:       10, // Reducimos el margen para aprovechar mejor el espacio
+                filename:     `Dictamen_Forense_${safeName}.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true, windowWidth: 1024 }, // scale 2 para mejor resolución
+                html2canvas:  { 
+                    scale: 2, 
+                    useCORS: true, 
+                    windowWidth: 1024, // Engaña a CSS para que aplique estilos de escritorio
+                    width: 1024        // Fuerza la captura de los 1024px completos
+                }, 
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
             // Generar y guardar
             html2pdf().set(opt).from(element).save().then(() => {
-                // Restaurar interfaz
+                // Restaurar interfaz a móvil / normal
                 if (actionButtons) actionButtons.style.display = 'flex';
                 if (mainHeader) mainHeader.style.display = 'block';
+                
+                element.style.width = originalWidth;
+                element.style.maxWidth = originalMaxWidth;
+
                 btn.innerHTML = originalText;
                 btn.disabled = false;
             }).catch(err => {
@@ -1113,6 +1129,10 @@
                 alert("Ocurrió un error al intentar generar el PDF. Por favor, intente de nuevo.");
                 if (actionButtons) actionButtons.style.display = 'flex';
                 if (mainHeader) mainHeader.style.display = 'block';
+                
+                element.style.width = originalWidth;
+                element.style.maxWidth = originalMaxWidth;
+                
                 btn.innerHTML = originalText;
                 btn.disabled = false;
             });
@@ -1587,4 +1607,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
